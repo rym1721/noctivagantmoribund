@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>instagram.exe — noctivagant moribund.</title>
+
+  <!-- Poppins для цифр -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+:root{
+      --bg: #0f0f0f;
+      --window: #141414;
+      --menu: #141414;
+      --border: #141414;
+      --muted: #bdbdbd;
+    }
+
+    /* базовая сетка */
+    html,body{height:100%;margin:0;}
+    body {
+      --bg:#111;
+      --window:#141414;
+      --title:#141414;
+      --menu:#141414;
+      --border:#2b2b2b;
+      --text:#ffffff;
+    }
+    html,body{height:100%;margin:0;}
+    body{
+      background:var(--bg);
+      font-family: "Courier New", monospace;
+      color:var(--text);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px 10px;
+      box-sizing:border-box;
+    }
+    .window {
+  width: 400px;
+  height: 100vh;         /* на весь экран */
+  background: var(--window);
+  border: 2px solid var(--border);
+  box-shadow: 0 0 15px rgba(0,0,0,.7);
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;               /* занимает всё пространство */
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+    .titlebar {
+      background: #141414;
+      padding: 5px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+    .titlebar .left{
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .titlebar .title{ font-size:14px; }
+    .titlebar .controls{ font-size:14px; opacity:.95; }
+    .back-btn{
+      display:none;
+      background:var(--menu);
+      color:#fff;
+      border:none;
+      padding:4px 8px;
+      cursor:pointer;
+      border-radius:3px;
+      font-size:14px;
+    }
+   .menu {
+  background: #7a7a7a;   /* немного светлее, чем фон body */
+  color: #ffffff;        /* почти белый текст */
+  border-bottom: 1px solid #7a7a7a;
+  padding: 4px 8px;
+}
+    .content{
+      flex:1;
+      overflow:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .profile { padding: 10px; }
+    .profile img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #888;
+    }
+    .stats {
+      margin: 10px 0;
+      font-size: 14px;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .stat-item {
+      margin-right: 15px;
+      text-align: left;
+    }
+    .number {
+      display: block;
+      font-family: "Poppins", sans-serif;
+      font-size: 16px;
+    }
+    .label {
+      display: block;
+      font-size: 12px;
+    }
+    .bio { font-size: 13px; margin-bottom: 10px; }
+    .buttons button {
+      background: #7a7a7a;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      margin: 3px;
+      cursor: pointer;
+    }
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:5px;
+      padding:14px;
+    }
+    .gallery img{
+      width:100%;
+      height:110px;
+      object-fit:cover;
+      filter:grayscale(100%);
+      cursor:pointer;
+      display:block;
+    }
+    .feed{ display:none; padding:8px; }
+    .post{
+      background:var(--window);
+      border:2px solid var(--border);
+      margin:10px 0;
+      overflow:hidden;
+    }
+    .post-head{
+      display:flex;
+      align-items:center;
+      gap:19px;
+      padding:11px;
+      background:#141414;
+      border-bottom:1px solid var(--border);
+    }
+    .post-head img{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      border:1px solid #888;
+      object-fit:cover;
+    }
+    .post-head .uname{
+      font-weight:bold;
+      font-size:20px;
+      text-transform:lowercase;
+    }
+
+    .post-img img{
+      width:100%;
+      height:auto;
+      display:block;
+      object-fit:cover;
+    }
+
+    .post-body{ 
+      padding:8px 10px; 
+      color:var(--muted); 
+      font-size:13px; 
+    }
+    .likes{ 
+      font-family:"Poppins", 
+      sans-serif; font-size:14px; 
+      color:#eee; 
+      margin-bottom:6px; 
+    }
+    .caption{ margin-bottom:6px; 
+      color:#ffffff; }
+
+
+    /* footer (музыка) — виден всегда */
+   .footer {
+  flex-shrink: 0;        /* фиксируем внизу */
+  background: var(--menu);
+  padding: 6px 10px;
+  color: #ffffff;
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  height: 36px;          /* уменьшаем высоту, меньше пустого */
+  box-sizing: border-box;
+}
+    .marquee{
+      overflow:hidden;
+      white-space:nowrap;
+      width:100%;
+    }
+    .marquee span{
+      display:inline-block;
+      padding-left:100%;
+      animation: scroll 14s linear infinite;
+    }
+    @keyframes scroll{
+      from{ transform: translateX(0); }
+      to{ transform: translateX(-100%); }
+    }
+
+    /* адаптивные мелочи */
+    @media (max-width:420px){
+      .window{ height:100vh; }
+      .profile{ padding:10px; }
+      .gallery{ gap:4px; padding:8px; }
+    }
+  </style>
+</head>
+<body> <div class="window" role="application" 
+  aria-label="instagram retro window"> 
+  <div class="titlebar"> 
+    <div class="left"> 
+      <button id="backBtn" 
+      class="back-btn" 
+      title="назад">←</button> 
+      <div class="title">instagram.exe</div> 
+    </div> 
+      <div class="controls">☐ ✕</div> 
+    </div> 
+    <div class="menu">File Edit View Options Help</div> 
+    <div class="content" id="content"> 
+      <div id="profileBlock"> 
+        <div class="profile"> 
+          <div class="profile-row"> 
+            <img src="https://i.pinimg.com/736x/86/22/05/862205f364d069b9df7068d5081980dc.jpg" alt="avatar"> <div> 
+              <div class="name">noctivagant moribund.</div> 
+              <div class="stats"> 
+                <div class="stat-item"> 
+                  <span class="number">34</span> 
+                  <span class="label">posts</span> 
+                </div> 
+                <div class="stat-item"> 
+                  <span class="number">27</span> 
+                  <span class="label">followers</span> 
+                </div> 
+                <div class="stat-item"> 
+                  <span class="number">78</span> 
+                  <span class="label">following</span> 
+                </div> 
+              </div> 
+            </div> 
+          </div> 
+           <div class="bio">破碎的现实中，一片黑暗的遗忘被黑影包围.</div>
+           <div class="bio">desperation engendered by an unparalleled doleful torment.</div>
+          <div class="buttons"> 
+            <button id="followingBtn">following</button> 
+            <button id="messageBtn">message</button> 
+          </div> 
+        </div>
+
+        <div class="gallery" id="galleryBlock" aria-label="gallery">
+          <img src="https://i.pinimg.com/736x/3b/2d/9a/3b2d9a539148873f3600778ee8f6c1cf.jpg" alt="pic2" data-index="0"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+          <img src="https://i.pinimg.com/736x/47/c6/f6/47c6f617b3e9d83e459792f2c0f71683.jpg" alt="pic1" data-index="1"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+          <img src="https://i.pinimg.com/736x/ec/bb/5c/ecbb5c232b13736c17f03fb03a0738d9.jpg" alt="pic3" data-index="2"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+          <img src="https://i.pinimg.com/736x/81/8d/d4/818dd4f4f51810e4a5fc7394ca962fa1.jpg" alt="pic4" data-index="3"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+          <img src="https://i.pinimg.com/736x/3d/ec/19/3dec19856b87a18eeed25b40585f798f.jpg" alt="pic5" data-index="4"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+          <img src="https://i.pinimg.com/1200x/7c/99/c1/7c99c101e4cf1f48687490ce03d7b2ba.jpg" alt="pic6" data-index="5"
+               onerror="this.onerror=null;this.src='https://via.placeholder.com/110x110?text=No+img'">
+        </div>
+      </div>
+
+      <!-- FEED (вертикальные посты) -->
+      <div id="feedBlock" class="feed" aria-live="polite"></div>
+    </div>
+
+    <!-- footer: song / marquee -->
+    <div class="footer">
+      <div class="marquee" aria-hidden="false"><span>♫ No mercy - Deathbyromy ♫</span></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // данные (исправлен синтаксис — добавлены запятые между элементами)
+      const images = [
+        "https://i.pinimg.com/736x/3b/2d/9a/3b2d9a539148873f3600778ee8f6c1cf.jpg",
+        "https://i.pinimg.com/736x/47/c6/f6/47c6f617b3e9d83e459792f2c0f71683.jpg",
+        "https://i.pinimg.com/736x/ec/bb/5c/ecbb5c232b13736c17f03fb03a0738d9.jpg",
+        "https://i.pinimg.com/736x/81/8d/d4/818dd4f4f51810e4a5fc7394ca962fa1.jpg",
+        "https://i.pinimg.com/736x/3d/ec/19/3dec19856b87a18eeed25b40585f798f.jpg",
+        "https://i.pinimg.com/1200x/7c/99/c1/7c99c101e4cf1f48687490ce03d7b2ba.jpg"
+      ];
+      const likes = [33,27,23,17,28,35];
+      const comments = [28,13,20,28,17,32];
+      const times = ["1 day ago","2 days ago","5 days ago","1 week ago","2 weeks ago","4 weeks ago"];
+      const captions = [
+        "she was drowning, but nobody saw her sink.",
+        "and when the night fell, it was as if the world exhaled",
+        "you are my quiet place in a world that never stops speaking.",
+        "the blade remembers its master.",
+        "i saw a ghost and it looked like love.",
+        "silence is a form of prayer."
+      ];
+
+      // элементы
+      const feed = document.getElementById('feedBlock');
+      const profileBlock = document.getElementById('profileBlock');
+      const galleryBlock = document.getElementById('galleryBlock');
+      const backBtn = document.getElementById('backBtn');
+      const followingBtn = document.getElementById('followingBtn');
+      const messageBtn = document.getElementById('messageBtn');
+      const content = document.getElementById('content');
+
+      // строим вертикальную ленту (первые сверху)
+      function buildFeed(){
+        feed.innerHTML = '';
+        for(let i = 0; i < images.length; i++){
+          const post = document.createElement('article');
+          post.className = 'post';
+          post.dataset.index = i;
+          post.innerHTML = `
+             <div class="post-head">
+              <img src="https://i.pinimg.com/736x/86/22/05/862205f364d069b9df7068d5081980dc.jpg" alt="avatar">
+              <div class="uname">noctivagant moribund.</div>
+            </div>
+            <div class="post-img"><img src="${images[i]}" alt="post image"></div>
+            <div class="post-body">
+              <div class="likes">🩶 ${likes[i]} &nbsp; • &nbsp; 🗨️ ${comments[i]}</div>
+              <div class="caption"><strong>${captions[i] || ''}</strong></div>
+              <div class="view-comments">view all ${comments[i]} comments</div>
+              <div class="time">${times[i]}</div>
+            </div>
+          `;
+          feed.appendChild(post);
+        }
+      }
+
+      // открыть feed, показать сверху (первый пост) или прокрутить к индексу
+      function openFeed(scrollIndex = 0){
+        buildFeed();
+        profileBlock.style.display = 'none';
+        feed.style.display = 'block';
+        backBtn.style.display = 'inline-block';
+        // сначала сброс прокрутки, затем плавный скролл к элементу
+        content.scrollTop = 0;
+        setTimeout(()=> {
+          const posts = feed.querySelectorAll('.post');
+          if(posts[scrollIndex]){
+            posts[scrollIndex].scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        }, 80);
+      }
+
+      function closeFeed(){
+        feed.style.display = 'none';
+        profileBlock.style.display = 'block';
+        backBtn.style.display = 'none';
+        content.scrollTop = 0;
+      }
+
+      // события
+      followingBtn.addEventListener('click', ()=> openFeed(0)); // открыть первый пост сверху
+      backBtn.addEventListener('click', closeFeed);
+      messageBtn.addEventListener('click', ()=> {
+        window.open('https://t.me/thsftmon','_blank');
+      });
+
+      // клик по миниатюре — открыть ленту и прокрутить к посту
+      galleryBlock.addEventListener('click', (e)=>{
+        const img = e.target.closest('img');
+        if(!img) return;
+        const idx = Number(img.dataset.index);
+        if(!isNaN(idx)) openFeed(idx);
+      });
+
+      // начальное состояние
+      feed.style.display = 'none';
+      backBtn.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
