@@ -21,47 +21,6 @@
     html,body{height:100%;margin:0;}
     body {
       --bg:#111;
-      --window:#141414;
-      --title:#141414;
-      --menu:#141414;
-      --border:#2b2b2b;
-      --text:#ffffff;
-    }
-    html,body{height:100%;margin:0;}
-    body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: var(--bg);
-}
-
-  .window {
-  width: 400px;
-  max-height: 90vh;  /* ограничиваем, но не фиксируем */
-  background: var(--window);
-  border: 2px solid var(--border);
-  box-shadow: 0 0 15px rgba(0,0,0,.7);
-  display: flex;
-  flex-direction: column;
-  margin: auto; /* центрирует при любых условиях */
-}
-
-.content {
-  flex: 1;               /* занимает всё пространство */
-  overflow: auto;
-  -webkit-overflow-scrollin:root{
-      --bg: #0f0f0f;
-      --window: #141414;
-      --menu: #141414;
-      --border: #141414;
-      --muted: #bdbdbd;
-    }
-
-    /* базовая сетка */
-    html,body{height:100%;margin:0;}
-    body {
-      --bg:#111;
       --window:#221f1f;
       --title:#141414;
       --menu:#141414;
@@ -69,7 +28,7 @@
       --text:#ffffff;
     }
     html,body{height:100%;margin:0;}
-body{
+    body{
       background:var(--bg);
       font-family: "Courier New", monospace;
       color:var(--text);
@@ -79,7 +38,6 @@ body{
       padding:20px 10px;
       box-sizing:border-box;
     }
-
     .window {
   width: 400px;
   height: 100vh;         /* на весь экран */
@@ -232,11 +190,11 @@ body{
 
 
     /* footer (музыка) — виден всегда */
-    .footer {
+   .footer {
   flex-shrink: 0;        /* фиксируем внизу */
   background: var(--menu);
   padding: 6px 10px;
-  color: #cfcfcf;
+  color: #ffffff;
   font-size: 13px;
   border-top: 1px solid var(--border);
   display: flex;
@@ -435,9 +393,4 @@ body{
     });
   </script>
 </body>
-
 </html>
-
-
-
-
