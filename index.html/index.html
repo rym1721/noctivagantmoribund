@@ -69,16 +69,14 @@
       --text:#ffffff;
     }
     html,body{height:100%;margin:0;}
-    body{
-      background:var(--bg);
-      font-family: "Courier New", monospace;
-      color:var(--text);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:20px 10px;
-      box-sizing:border-box;
-    }
+ body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+}
+
     .window {
   width: 400px;
   height: 100vh;         /* на весь экран */
@@ -436,5 +434,6 @@
 </body>
 
 </html>
+
 
 
